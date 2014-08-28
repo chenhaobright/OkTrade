@@ -3,6 +3,8 @@
 import okcoin
 from userdata import UserData
 
+import time
+
 NEGATIVE = 0
 POSITIVE = 1
 
@@ -41,8 +43,8 @@ class Robot(object):
     def addPrice(self, price):
         curPrice = price
         self.timerCount = self.timerCount + 1
-
-        #self.print_log(timerCount=self.timerCount,curPrice=curPrice, canTrade=self.canTrade,effect=self.effect)
+        
+        self.print_time(curPrice)
 
         self.priceList.append(curPrice)
 
@@ -124,6 +126,10 @@ class Robot(object):
 
     def cancel_order(self, order_id):
         pass
+
+    def print_time(self,curPrice):
+    	localtime = time.asctime( time.localtime(time.time()) )
+    	print(localtime, curPrice)
 
     def print_log(self, *args,**kw):
         print("kw=", kw)
