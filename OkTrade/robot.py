@@ -1,10 +1,13 @@
-#coding:utf-8
+ï»¿#coding:utf-8
 
 import okcoin
 from userdata import UserData
 
 NEGATIVE = 0
 POSITIVE = 1
+
+PRICE_RATIO = 0.002      
+TRADE_RATIO = 0.5  
 
 class Robot(object):
     def __init__(self, partner, secret_key,time = 60, count = 5):
@@ -14,30 +17,35 @@ class Robot(object):
         self.interval_time = time
         self.step_count = count 
 
-        #½»Ò×ĞÅÏ¢
+        #äº¤æ˜“ä¿¡æ¯
         self.tradeAPI = okcoin.TradeAPI(partner, secret_key)
         self.tradeResult = None
         self.tradeCount = 0
 
-        #ÓÃ»§×Ê²úĞÅÏ¢
-        self.assetInfo = UserData(self.tradeAPI.get_userInfo()).getUserData()
-
-        #¼Û¸ñ
+        #ä»·æ ¼
         self.priceList = [0]
         self.effect = POSITIVE
         self.canTrade = False
 
-        #¶¨Ê±ÇëÇó´ÎÊı
+        #å®šæ—¶è¯·æ±‚æ¬¡æ•°
         self.timerCount = 0
 
-
     def addTicker(self, ticker):
-        curPrice = ( (float(ticker.bid) + float(ticker.ask)) * 0.5 )
+        if(self.effect == POSITIVE):
+            price = float(ticker.bid)
+        else:
+            price = float(ticker.ask)
+
+        self.addPrice(price)
+
+    def addPrice(self, price):
+        curPrice = price
         self.timerCount = self.timerCount + 1
 
-        self.print_log(timerCount=self.timerCount,curPrice=curPrice, canTrade=self.canTrade,effect=self.effect)
-        
+        #self.print_log(timerCount=self.timerCount,curPrice=curPrice, canTrade=self.canTrade,effect=self.effect)
+
         self.priceList.append(curPrice)
+
         self.tradeStrategy()
         
     def tradeStrategy(self):
@@ -54,7 +62,7 @@ class Robot(object):
             if(curPrice >= lastPrice):
                 return
             else:
-                #Ò»Ö±ÉÏÕÇ£¬µ±Ç°ÏÂµø£¬Âô³ö
+                #ä¸€ç›´ä¸Šæ¶¨ï¼Œå½“å‰ä¸‹è·Œï¼Œå–å‡º
                 self.trade(False, curPrice)
 
                 self.priceList = []
@@ -64,7 +72,7 @@ class Robot(object):
             if(curPrice <= lastPrice):
                 return
             else:
-                #Ò»Ö±ÏÂµø£¬µ±Ç°ÉÏÕÇ£¬ÂòÈë
+                #ä¸€ç›´ä¸‹è·Œï¼Œå½“å‰ä¸Šæ¶¨ï¼Œä¹°å…¥
                 self.trade(True, curPrice)
 
                 self.priceList = []
@@ -92,19 +100,24 @@ class Robot(object):
                 self.effect = POSITIVE
 
     def trade(self, isBuy, curPrice):   
-        rate = 1
-        amount = 1
+        #ç”¨æˆ·èµ„äº§ä¿¡æ¯ï¼Œæ¯æ¬¡äº¤æ˜“
+        self.assetInfo = UserData(self.tradeAPI.get_userInfo()).getUserData()
+        self.tradeCount += 1
+        
         if(isBuy == True):
-            rate = curPrice * (1 + 0.005)
-            amount = self.assetInfo['free_cny'] / curPrice * 0.5
+            rate = '%.2f' %( curPrice * (1 + PRICE_RATIO) )
+            amount = '%.2f' % (self.assetInfo['free_cny'] / curPrice * TRADE_RATIO)
             self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
+
+            self.print_log(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, rate=rate, amount=amount,result=self.tradeResult)
         else:
-            rate = curPrice * (1 - 0.005)
-            amount = self.assetInfo['free_ltc'] * 0.5
+            rate = '%.2f' %( curPrice * (1 - PRICE_RATIO) )
+            amount = '%.2f' %( self.assetInfo['free_ltc'] * TRADE_RATIO )
             self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
 
-        self.tradeCount += 1
-        self.print_log(tradeCount=self.tradeCount,isBuy=isBuy, rate=rate, amount=amount,tradeResult=self.tradeResult)
+            self.print_log(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, rate=rate, amount=amount,result=self.tradeResult)
+
+        self.canTrade = False
 
     def get_order(self, order_id):
         pass
@@ -113,7 +126,9 @@ class Robot(object):
         pass
 
     def print_log(self, *args,**kw):
-        print("args = ",args, "kw = ", kw)
+        print("kw=", kw)
+        print(self.priceList)
+        print("free_cny=",self.assetInfo['free_cny'], "free_btc=",self.assetInfo['free_btc'], "free_ltc=",self.assetInfo['free_ltc'])
         
 
 

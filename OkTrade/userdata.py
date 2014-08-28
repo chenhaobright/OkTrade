@@ -1,4 +1,4 @@
-#coding:utf-8
+ï»¿#coding:utf-8
 
 #  date   : 2014/08/27
 # author  : chenhao
@@ -12,16 +12,16 @@ class UserData(object):
     def setUserData(self, result):
         self.__result = result
 
-        #×Ü×Ê½ð
+        #æ€»èµ„é‡‘
         self.__data['asset_net'] = float(result['info']['funds']['asset']['net'])
         self.__data['asset_total'] = float(result['info']['funds']['asset']['total'])
 
-        #Ê£Óà×Ê½ð
+        #å‰©ä½™èµ„é‡‘
         self.__data['free_cny'] = float(result['info']['funds']['free']['cny'])
         self.__data['free_btc'] = float(result['info']['funds']['free']['btc'])
         self.__data['free_ltc'] = float(result['info']['funds']['free']['ltc'])
         
-        #¶³½á×Ê½ð
+        #å†»ç»“èµ„é‡‘
         self.__data['freezed_cny'] = float(result['info']['funds']['freezed']['cny'])
         self.__data['freezed_btc'] = float(result['info']['funds']['freezed']['btc'])
         self.__data['freezed_ltc'] = float(result['info']['funds']['freezed']['ltc'])

@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>94534be1-376e-407e-9851-ad608c123bf3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>OkTrade.py</StartupFile>
+    <StartupFile>oktrade.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,9 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="okcoin.py" />
-    <Compile Include="Robot.py" />
+    <Compile Include="oktrade.py" />
+    <Compile Include="robot.py" />
     <Compile Include="userdata.py" />
-    <Compile Include="OkTrade.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
