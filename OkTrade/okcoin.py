@@ -134,7 +134,7 @@ class TradeAPI(object):
         trade_url = 'https://www.okcoin.cn/api/trade.do'
         return self._post(params, trade_url)
 
-    def cancel_order(self, order_id, symbol):
+    def cancelOrder(self, order_id, symbol):
         params = {
             'partner':self.partner,
             'order_id':order_id,
@@ -143,7 +143,7 @@ class TradeAPI(object):
         cancel_order_url = 'https://www.okcoin.cn/api/cancelorder.do'
         return self._post(params, cancel_order_url)
        
-    def get_order(self, order_id, symbol):
+    def getOrder(self, order_id, symbol):
         params = {
             'partner':self.partner,
             'order_id':order_id,
