@@ -8,7 +8,7 @@ partner = 3296386
 secret_key = '3DD45E548EB758613F589250150CD1ED'
 
 interval_time = 50     
-step_count = 5
+step_count = 4
 
 #启动交易机器人
 robot = Robot(partner, secret_key, interval_time, step_count)
