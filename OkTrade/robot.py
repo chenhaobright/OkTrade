@@ -71,6 +71,7 @@ class Robot(object):
                 self.trade(False, curPrice)
 
                 self.priceList = []
+                self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
                 self.effect = NEGATIVE
         else:
@@ -81,6 +82,7 @@ class Robot(object):
                 self.trade(True, curPrice)
 
                 self.priceList = []
+                self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
                 self.effect = NEGATIVE
 
