@@ -112,7 +112,7 @@ class Robot(object):
         if(isBuy == True):
             rate = '%.2f' %( curPrice * (1 + PRICE_RATIO) )
             amount = '%.2f' % (self.assetInfo['free_cny'] / curPrice * self.getTradeRatio(isBuy))
-            self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
+            #self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
 
             self.sellCount = 0
             self.buyCount += 1
@@ -120,7 +120,7 @@ class Robot(object):
         else:
             rate = '%.2f' %( curPrice * (1 - PRICE_RATIO) )
             amount = '%.2f' %( self.assetInfo['free_ltc'] * self.getTradeRatio(isBuy))
-            self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
+            #self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
 
             self.sellCount += 1
             self.buyCount = 0
@@ -138,7 +138,16 @@ class Robot(object):
         tradeRatio = 0
         if(isBuy == True):
             if(self.buyCount == 0):
-                tradeRatio = 0.2
+            	if(self.sellCount == 0):	#前面没有卖
+            		tradeRatio = 0.2
+            	elif(self.sellCount == 1):  #前面卖了一次
+            		tradeRatio = 0.3
+            	elif(self.sellCount == 2):  #前面卖了两次
+            		tradeRatio = 0.5
+            	elif(self.sellCount == 3):  #三次
+            		tradeRatio = 0.9
+            	else:
+            		tradeRatio = 0.95		#N次
             elif(self.buyCount == 1):
                 tradeRatio = 0.3
             elif(self.buyCount == 2):
@@ -147,7 +156,16 @@ class Robot(object):
                 tradeRatio = 0.5
         else:
             if(self.sellCount == 0):
-                tradeRatio = 0.2
+            	if(self.buyCount == 0):
+                	tradeRatio = 0.2
+                elif(self.buyCount == 1):
+                	tradeRatio = 0.3
+                elif(self.buyCount == 2):
+                	tradeRatio = 0.5
+                elif(self.buyCount == 3):
+                	tradeRatio = 0.9
+                else:
+                	tradeRatio = 0.95
             elif(self.sellCount == 1):
                 tradeRatio = 0.3
             elif(self.sellCount == 2):
