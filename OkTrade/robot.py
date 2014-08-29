@@ -68,7 +68,8 @@ class Robot(object):
                 return
             else:
                 #一直上涨，当前下跌，卖出
-                self.trade(False, curPrice)
+                if(abs(curPrice - self.priceList[0]) >= 0.1 or abs(curPrice - lastPrice) >= 0.1):
+                    self.trade(False, curPrice)
 
                 self.priceList = []
                 self.priceList.append(lastPrice)
@@ -79,7 +80,8 @@ class Robot(object):
                 return
             else:
                 #一直下跌，当前上涨，买入
-                self.trade(True, curPrice)
+                if(abs(curPrice - self.priceList[0]) >= 0.1 or abs(curPrice - lastPrice) >= 0.1):
+                    self.trade(True, curPrice)
 
                 self.priceList = []
                 self.priceList.append(lastPrice)
