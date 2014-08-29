@@ -112,7 +112,7 @@ class Robot(object):
         if(isBuy == True):
             rate = '%.2f' %( curPrice * (1 + PRICE_RATIO) )
             amount = '%.2f' % (self.assetInfo['free_cny'] / curPrice * self.getTradeRatio(isBuy))
-            #self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
+            self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
 
             self.sellCount = 0
             self.buyCount += 1
@@ -120,7 +120,7 @@ class Robot(object):
         else:
             rate = '%.2f' %( curPrice * (1 - PRICE_RATIO) )
             amount = '%.2f' %( self.assetInfo['free_ltc'] * self.getTradeRatio(isBuy))
-            #self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
+            self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
 
             self.sellCount += 1
             self.buyCount = 0
