@@ -30,6 +30,7 @@ class Robot(object):
         self.priceList = [0]
         self.effect = POSITIVE
         self.canTrade = False
+        self.isUp = 1
 
         #定时请求次数
         self.timerCount = 0
@@ -46,8 +47,6 @@ class Robot(object):
     def addPrice(self, price):
         curPrice = price
         self.timerCount = self.timerCount + 1
-        
-        self.printTime(curPrice)
 
         self.priceList.append(curPrice)
 
@@ -56,6 +55,15 @@ class Robot(object):
     def tradeStrategy(self):
         curPrice = self.priceList[-1]
         lastPrice = self.priceList[-2]
+
+        if(curPrice > lastPrice):
+            self.isUp = 1
+        elif (curPrice < lastPrice):
+            self.isUp = -1
+        else:
+            self.isUp = 0
+                
+        self.printTime(curPrice, self.isUp)
 
         if (self.canTrade == True):
             self.canTradeStrategy(curPrice, lastPrice)
@@ -86,7 +94,7 @@ class Robot(object):
                 self.priceList = []
                 self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
-                self.effect = NEGATIVE
+                self.effect = POSITIVE
 
     def cannotTradeStrategy(self, curPrice, lastPrice):
         priceCount = len(self.priceList)
@@ -179,9 +187,9 @@ class Robot(object):
         
         return tradeRatio
 
-    def printTime(self,curPrice):
+    def printTime(self,curPrice, isUp):
     	localtime = time.asctime( time.localtime(time.time()) )
-    	print(localtime, curPrice)
+    	print(localtime, curPrice, isUp)
 
     def printLog(self, *args,**kw):
         print("kw=", kw)
