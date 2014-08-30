@@ -145,9 +145,9 @@ class Robot(object):
             	if(self.sellCount == 0):	#前面没有卖
             		tradeRatio = 0.2
             	elif(self.sellCount == 1):  #前面卖了一次
-            		tradeRatio = 0.3
+            		tradeRatio = 0.2
             	elif(self.sellCount == 2):  #前面卖了两次
-            		tradeRatio = 0.5
+            		tradeRatio = 0.3
             	elif(self.sellCount == 3):  #三次
             		tradeRatio = 0.9
             	else:
@@ -163,9 +163,9 @@ class Robot(object):
             	if(self.buyCount == 0):
                 	tradeRatio = 0.2
                 elif(self.buyCount == 1):
-                	tradeRatio = 0.3
+                	tradeRatio = 0.2
                 elif(self.buyCount == 2):
-                	tradeRatio = 0.5
+                	tradeRatio = 0.3
                 elif(self.buyCount == 3):
                 	tradeRatio = 0.9
                 else:
