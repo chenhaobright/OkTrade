@@ -17,7 +17,6 @@ robot = Robot(partner, secret_key, interval_time, step_count)
 list1 = [1,2,3,4,5,6,7,6]
 list2 = [7,6,5,4,3,2,1,2]
 list3 = [3,2,2,4,5,6,7,8,3]
-
 list4 = [7,8,8,6,4,3,2,1,3,1,2,3,4,5,6,7,6,7,6,5,4,3,2,1,2,3,2,2,4,5,6,7,8,3]
 '''
 
@@ -35,9 +34,11 @@ if __name__ == "__main__":
     t = threading.Timer(interval_time, autoTrade)  
     t.start() 
     '''
-    for price in list4:
+    list5 = [32.16, 32.17, 32.17,32.14,32.14,32.16,32.17,32.17,32.19,32.16,32.21]
+    for price in list5:
     	robot.addPrice(price)
     '''
+    
 
 
 

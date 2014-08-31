@@ -10,6 +10,7 @@ POSITIVE = 1
 
 PRICE_RATIO = 0.001      
 TRADE_RATIO = 0.5  
+PRICE_INTERVAL = 0.05
 
 class Robot(object):
     def __init__(self, partner, secret_key,time = 60, count = 5):
@@ -76,9 +77,10 @@ class Robot(object):
                 return
             else:
                 #一直上涨，当前下跌，卖出
-                if(abs(curPrice - self.priceList[0]) >= 0.1 or abs(curPrice - lastPrice) >= 0.1):
+                if(abs(curPrice - self.priceList[0]) >= PRICE_INTERVAL or abs(curPrice - lastPrice) >= PRICE_INTERVAL):
                     self.trade(False, curPrice)
 
+                self.canTrade = False
                 self.priceList = []
                 self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
@@ -88,9 +90,10 @@ class Robot(object):
                 return
             else:
                 #一直下跌，当前上涨，买入
-                if(abs(curPrice - self.priceList[0]) >= 0.1 or abs(curPrice - lastPrice) >= 0.1):
+                if(abs(curPrice - self.priceList[0]) >= PRICE_INTERVAL or abs(curPrice - lastPrice) >= PRICE_INTERVAL):
                     self.trade(True, curPrice)
 
+                self.canTrade = False
                 self.priceList = []
                 self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
@@ -105,6 +108,7 @@ class Robot(object):
                     self.canTrade = True
             else:
                 self.priceList = []
+                self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
                 self.effect = NEGATIVE
         else:  
@@ -113,6 +117,7 @@ class Robot(object):
                     self.canTrade = True
             else:
                 self.priceList = []
+                self.priceList.append(lastPrice)
                 self.priceList.append(curPrice)
                 self.effect = POSITIVE
 
@@ -128,7 +133,9 @@ class Robot(object):
 
             self.sellCount = 0
             self.buyCount += 1
-            self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, rate=rate, amount=amount,result=self.tradeResult,buyCount=self.buyCount)
+            self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, 
+                rate=rate, amount=amount,result=self.tradeResult,buyCount=self.buyCount,
+                effect=self.effect)
         else:
             rate = '%.2f' %( curPrice * (1 - PRICE_RATIO) )
             amount = '%.2f' %( self.assetInfo['free_ltc'] * self.getTradeRatio(isBuy))
@@ -136,9 +143,9 @@ class Robot(object):
 
             self.sellCount += 1
             self.buyCount = 0
-            self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, rate=rate, amount=amount,result=self.tradeResult,sellCount=self.sellCount)
-
-        self.canTrade = False
+            self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, 
+                rate=rate, amount=amount,result=self.tradeResult,sellCount=self.sellCount,
+                effect=self.effect)
 
     def getOrder(self, order_id):
         pass
