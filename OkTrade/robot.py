@@ -175,16 +175,7 @@ class Robot(object):
                 tradeRatio = 0.5
         else:
             if(self.sellCount == 0):
-            	if(self.buyCount == 0):
-                	tradeRatio = 0.2
-                elif(self.buyCount == 1):
-                	tradeRatio = 0.2
-                elif(self.buyCount == 2):
-                	tradeRatio = 0.3
-                elif(self.buyCount == 3):
-                	tradeRatio = 0.9
-                else:
-                	tradeRatio = 0.95
+                tradeRatio = 0.2
             elif(self.sellCount == 1):
                 tradeRatio = 0.3
             elif(self.sellCount == 2):
