@@ -7,7 +7,7 @@ from robot import Robot
 partner = 3296386
 secret_key = '3DD45E548EB758613F589250150CD1ED'
 
-interval_time = 60    
+interval_time = 60   
 step_count = 4
 
 #启动交易机器人

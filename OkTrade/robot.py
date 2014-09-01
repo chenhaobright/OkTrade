@@ -28,7 +28,8 @@ class Robot(object):
         self.sellCount = 0
 
         #价格
-        self.priceList = [1]
+        self.firstStart = True
+        self.priceList = []
         self.effect = POSITIVE
         self.canTrade = False
         self.isUp = 1
@@ -38,12 +39,15 @@ class Robot(object):
 
 
     def addTicker(self, ticker):
-
+        price = 0
         if(self.effect == POSITIVE):
             price = float(ticker.bid)
         else:
             price = float(ticker.ask)
 
+        if(self.firstStart):
+            self.priceList.append(price)
+            self.firstStart = False
         self.addPrice(price)
 
     def addPrice(self, price):
