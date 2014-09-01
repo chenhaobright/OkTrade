@@ -38,6 +38,7 @@ class Robot(object):
 
 
     def addTicker(self, ticker):
+
         if(self.effect == POSITIVE):
             price = float(ticker.bid)
         else:
@@ -155,7 +156,20 @@ class Robot(object):
 
     def getTradeRatio(self, isBuy):
         tradeRatio = 0
-        if(isBuy == True):
+
+        #如果一次交易中，涨跌幅超过1%，卖多点
+        ratioDelta = abs(self.priceList[-1] - self.priceList[0]) / self.priceList[0]
+        if(ratioDelta > 0.01):      #1%
+            return 0.7
+        elif(ratioDelta > 0.15):    #1.5%
+            return 0.8
+        elif(ratioDelta > 0.02):    #2%
+            return 0.9
+        else:
+            pass
+
+        #正常涨跌幅
+        if(isBuy):
             if(self.buyCount == 0):
             	if(self.sellCount == 0):	#前面没有卖
             		tradeRatio = 0.2

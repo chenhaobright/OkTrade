@@ -28,8 +28,16 @@ class DepthObject(object):
 
 class MarketData(object):
     def get_json(self, url):
-        response = urllib2.urlopen(url)
-        data = simplejson.load(response)
+
+        bFailed = True
+        while(bFailed):
+            try:
+                response = urllib2.urlopen(url,  data = None, timeout = 10)
+                data = simplejson.load(response)
+                bFailed = False
+            except Exception, e:
+                print("timeout", str(e))
+        
         return data
 
     def ticker(self, symbol):
