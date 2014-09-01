@@ -38,3 +38,4 @@ if __name__ == "__main__":
     for price in list5:
     	robot.addPrice(price)
     '''
+    

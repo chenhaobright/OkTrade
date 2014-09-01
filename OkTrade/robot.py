@@ -28,7 +28,7 @@ class Robot(object):
         self.sellCount = 0
 
         #价格
-        self.priceList = [0]
+        self.priceList = [1]
         self.effect = POSITIVE
         self.canTrade = False
         self.isUp = 1
@@ -129,24 +129,26 @@ class Robot(object):
         
         if(isBuy == True):
             rate = '%.2f' %( curPrice * (1 + PRICE_RATIO) )
-            amount = '%.2f' % (self.assetInfo['free_cny'] / curPrice * self.getTradeRatio(isBuy))
+            percent = self.getTradeRatio(isBuy)
+            amount = '%.2f' % (self.assetInfo['free_cny'] / curPrice * percent)
             self.tradeResult = self.tradeAPI.trade('ltc_cny', 'buy', str(rate), str(amount))
 
             self.sellCount = 0
             self.buyCount += 1
             self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, 
                 rate=rate, amount=amount,result=self.tradeResult,buyCount=self.buyCount,
-                effect=self.effect)
+                effect=self.effect, tradeRatio = percent)
         else:
             rate = '%.2f' %( curPrice * (1 - PRICE_RATIO) )
-            amount = '%.2f' %( self.assetInfo['free_ltc'] * self.getTradeRatio(isBuy))
+            percent = self.getTradeRatio(isBuy)
+            amount = '%.2f' %( self.assetInfo['free_ltc'] * percent)
             self.tradeResult = self.tradeAPI.trade('ltc_cny', 'sell', str(rate), str(amount))
 
             self.sellCount += 1
             self.buyCount = 0
             self.printLog(timer=self.timerCount,tradeCount=self.tradeCount,isBuy=isBuy, 
                 rate=rate, amount=amount,result=self.tradeResult,sellCount=self.sellCount,
-                effect=self.effect)
+                effect=self.effect, tradeRatio = percent)
 
     def getOrder(self, order_id):
         pass
