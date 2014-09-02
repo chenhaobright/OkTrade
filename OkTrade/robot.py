@@ -46,7 +46,10 @@ class Robot(object):
             price = float(ticker.ask)
 
         if(self.firstStart):
-            self.priceList.append(price)
+        	#此时+0.01原因有二：
+        	#1. + 是为了与默认的self.effect = POSITIVE保持相反
+        	#2. 0.01刚好能达到相反目的，而且价格量也很少，但是0.02,0.03也可以
+            self.priceList.append(price + 0.01) 
             self.firstStart = False
         self.addPrice(price)
 
