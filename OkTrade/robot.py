@@ -174,6 +174,8 @@ class Robot(object):
             return 0.8
         elif(ratioDelta > 0.01):    #1%
             return 0.7
+        elif(ratioDelta > 0.008): 	#0.8%
+        	return 0.5
         else:
             pass
 
