@@ -228,6 +228,3 @@ class Robot(object):
         print(self.priceList)
         print("free_cny=",self.assetInfo['free_cny'], "free_btc=",self.assetInfo['free_btc'], "free_ltc=",self.assetInfo['free_ltc'])
         
-
-
-
