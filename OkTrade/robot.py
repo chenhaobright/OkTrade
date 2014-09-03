@@ -170,7 +170,7 @@ class Robot(object):
         ratioDelta = abs(self.priceList[0] - self.priceList[-2]) / self.priceList[0]
         if(ratioDelta > 0.02):      #2%
             return 0.9
-        elif(ratioDelta > 0.15):    #1.5%
+        elif(ratioDelta > 0.015):    #1.5%
             return 0.8
         elif(ratioDelta > 0.01):    #1%
             return 0.7
