@@ -4,8 +4,8 @@ import threading
 import okcoin
 from robot import Robot 
 
-partner = 3296386
-secret_key = '3DD45E548EB758613F589250150CD1ED'
+partner = 1234567
+secret_key = 'XXXXXE548EB758613F589250150XXXXX'
 
 interval_time = 60   
 step_count = 5
