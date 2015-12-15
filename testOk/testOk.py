@@ -1,7 +1,7 @@
 import okcoin
 
-partner = 3296386
-secret_key = '3DD45E548EB758613F589250150CD1ED'
+partner = 3296386123
+secret_key = '3DD45E548EB7586153F589250150CD1ED54'
 
 T = okcoin.TradeAPI(partner, secret_key)
 
