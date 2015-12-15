@@ -1,5 +1,5 @@
 ﻿#coding:utf-8
-
+ 
 #  date   : 2014/08/27
 # author  : chenhao
 # function: data base class
