@@ -2,7 +2,7 @@
 
 import okcoin
 from userdata import UserData
-
+ 
 import time
 
 NEGATIVE = 0
